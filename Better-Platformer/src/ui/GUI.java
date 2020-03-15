@@ -67,19 +67,19 @@ public class GUI extends JFrame implements ActionListener, KeyListener {
 		//Game fuckery
 		game = Game.getInstance();
 		
-		tick = new Timer(17, this); //Event tick
+		tick = new Timer(17, this); //Event tick17
 		tick.setRepeats(true);
 		tick.start();
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		//
+		game.handleKeyPress(e);
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		//
+		game.handleKeyRelease(e);
 	}
 
 	@Override
@@ -92,6 +92,7 @@ public class GUI extends JFrame implements ActionListener, KeyListener {
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource().equals(tick)) {
 			gfx.update();
+			game.updateEventTick();
 		}
 	}
 
@@ -110,7 +111,7 @@ public class GUI extends JFrame implements ActionListener, KeyListener {
 			
 			//Game stuff
 			for(DrawData dd: game.getCurrentRoomDrawData()) {
-				g.fillRect(dd.x, dd.y, dd.width, dd.height);
+				g.drawRect(dd.x, dd.y, dd.width, dd.height);
 			}
 			
 			g.setColor(Color.WHITE);

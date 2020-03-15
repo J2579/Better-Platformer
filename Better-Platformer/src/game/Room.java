@@ -3,6 +3,8 @@ package game;
 import java.util.ArrayList;
 
 import gfx.DrawData;
+import player.BoundingBox;
+import player.PhysicsScreenObject;
 import player.ScreenObject;
 
 public class Room {
@@ -18,6 +20,17 @@ public class Room {
 		objects.add(o);
 	}
 	
+	public void update() {
+		for(ScreenObject o: objects) { //At this point, we can choose to ignore collision with physics objects
+									   //by copying 'objects' into another list, stripping it of instances of PhysicsScreenObject!
+			if(o instanceof PhysicsScreenObject) {
+				((PhysicsScreenObject)(o)).updatePosition(objects);
+			}
+		}
+		//Special Player Collide
+		Game.getInstance().getPlayerRef().updatePosition(objects);
+	}
+
 	public ArrayList<DrawData> getBlitList() {
 		ArrayList<DrawData> blit = new ArrayList<DrawData>();
 		for(ScreenObject o: objects) {
@@ -25,5 +38,4 @@ public class Room {
 		}
 		return blit;
 	}
-	
 }

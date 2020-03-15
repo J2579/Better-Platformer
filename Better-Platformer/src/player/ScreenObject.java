@@ -14,8 +14,15 @@ public class ScreenObject {
 		position = new Point(startX, startY);
 		this.width = width;
 		this.height = height;
+		
+		if(width < 10 || height < 10)
+			throw new IllegalArgumentException("Dimensions too small to check collision.");
 	}
 
+	//Does 'this' collide o and its specified bounding box?
+	public boolean collides(BoundingBox bb) {
+		return BoundingBox.generateBoundingBox(this).collides(bb);
+	}
 	
 	public DrawData getDrawData() {
 		return DrawData.defineDrawCoordanitesFromScreenObject(this);
